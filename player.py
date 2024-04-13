@@ -90,3 +90,4 @@ class Player:
         self.realcordY = 100 * self.cordY + 25
         self.player_rect = self.player_image.get_rect(center=(self.realcordX, self.realcordY))
         screen.blit(self.player_image, self.player_rect)
+

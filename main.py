@@ -4,6 +4,7 @@ import pygame
 from menu import Menu, Settings, FAQ
 from player import Player
 from board import Board
+from health import Health
 
 
 def draw_background(screen, image):
@@ -74,15 +75,18 @@ if __name__ == '__main__':
             if not fin:
                 board = Board()
                 player = Player()
+                health = Health(player.health)
                 fin = True
             draw_background(screen, 'backgrounds/river.jpg')
             board.draw(screen)
-            player.draw(screen)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                 player.move(event, board.board)
+                health.change(player.health)
                 if player.death():
                     fin = False
                     menu_mod = 4
+            player.draw(screen)
+            health.draw(screen)
             pygame.display.flip()
