@@ -1,7 +1,7 @@
 import sys
 
 import pygame
-from menu import Menu, Settings, FAQ
+from menu import Menu, Settings, FAQ, Result_Bad, Result_Good
 from player import Player
 from board import Board
 from health import Health
@@ -18,7 +18,10 @@ if __name__ == '__main__':
     menu_mod = 1
     fin = False
     sett = False
-    board, player, settings = None, None, None
+    fa = False
+    end_bad = False
+    end_good = False
+    board, player, settings, health, faq, bad, good = None, None, None, None, None, None, None
     screen = pygame.display.set_mode((1600, 900))
     while True:
         if menu_mod == 1:
@@ -59,7 +62,9 @@ if __name__ == '__main__':
 
             pygame.display.flip()
         elif menu_mod == 3:
-            faq = FAQ()
+            if not fa:
+                fa = True
+                faq = FAQ()
             draw_background(screen, 'backgrounds/FAQ.png')
             faq.update_display(screen)
             for event in pygame.event.get():
@@ -69,8 +74,42 @@ if __name__ == '__main__':
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if faq.Button1.pressed(pygame.mouse.get_pos()):
                         menu_mod = 2
+                        fa = False
         elif menu_mod == 4:
-            pass
+            if not end_bad:
+                end_bad = True
+                bad = Result_Bad()
+            draw_background(screen, 'backgrounds/menu.png')
+            bad.update_display(screen)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if bad.Button1.pressed(pygame.mouse.get_pos()):
+                        menu_mod = 0
+                        end_bad = False
+                    elif bad.Button2.pressed(pygame.mouse.get_pos()):
+                        menu_mod = 1
+                        end_bad = False
+        elif menu_mod == 5:
+            if not end_good:
+                end_good = True
+                good = Result_Good(player.score)
+            draw_background(screen, 'backgrounds/menu.png')
+            good.update_display(screen)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if good.Button1.pressed(pygame.mouse.get_pos()):
+                        menu_mod = 0
+                        end_good = False
+                    elif good.Button2.pressed(pygame.mouse.get_pos()):
+                        menu_mod = 1
+                        end_good = False
+
         else:
             if not fin:
                 board = Board()
@@ -82,8 +121,12 @@ if __name__ == '__main__':
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
+                    sys.exit()
                 player.move(event, board.board)
                 health.change(player.health)
+                if player.cordX >= 13:
+                    fin = False
+                    menu_mod = 5
                 if player.death():
                     fin = False
                     menu_mod = 4

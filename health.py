@@ -1,6 +1,6 @@
 import pygame
 
-class Health():
+class Health:
     def __init__(self, health):
         self.hp_sprite = pygame.image.load('objects/heart.png')
         self.hp_sprite = pygame.transform.scale(self.hp_sprite, (100, 100))
