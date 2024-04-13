@@ -28,7 +28,7 @@ class Settings(Menu):
         super().__init__()
 
     def update_display(self, screen, status_music):
-        self.Button1.create_button(screen, (107, 142, 35), 700, 300, 200, 70, 0, f"Sound {"ON" if status_music else "OFF"}", (255, 255, 255))
+        self.Button1.create_button(screen, (107, 142, 35), 700, 300, 200, 70, 0, "Sound ON" if status_music else "Sound OFF", (255, 255, 255))
         self.Button2.create_button(screen, (107, 142, 35), 700, 453, 200, 70, 0, "FAQ", (255, 255, 255))
         self.Button3.create_button(screen, (107, 142, 35), 700, 600, 200, 70, 0, "Back", (255, 255, 255))
         font = pygame.font.Font(None, 120)
