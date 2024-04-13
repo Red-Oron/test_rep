@@ -1,7 +1,7 @@
 import pygame
 
 
-class player:
+class Player:
 
     def __init__(self):
 
@@ -21,7 +21,7 @@ class player:
         self.sizeX = 765
         self.sizeY = 1035
 
-        self.player_image = pygame.image.load('image')
+        self.player_image = pygame.image.load('player_image/playe2r.png')
     def death(self):
         if self.health == 0:
             return True
@@ -40,16 +40,18 @@ class player:
                 self.movingY -= 1
             self.location(mass)
 
-    def location(self, screen, mass):
+    def location(self, mass):
         if self.movingX<=self.width and self.movingX>=0 and self.movingY<=self.hight and self.movingY>=0:
-            if mass[self.cordX, self.cordY] == 0:
+            if mass[self.cordX][self.cordY] == 0:
                 self.health -= 1
                 self.movingX = self.cordX
                 self.movingY = self.cordY
             else:
                 self.cordX = self.movingX
                 self.cordY = self.movingY
-                if mass[self.cordX, self.cordY] == 2: self.Finish = True
+                if mass[self.cordX][self.cordY] == 2: self.Finish = True
+
+    def draw(self, screen):
         screen.blit(self.player_image, self.player_image.get_rect(bottomright=(self.sizeX, self.sizeY)))
 
 
