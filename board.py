@@ -18,5 +18,5 @@ class Board:
                     pygame.draw.rect(screen, (255, 0, 0), (self.size * j, self.size * i, self.size, self.size))
 
     def generate(self):
-        return [list(map(int, ['1'] + list(i)[:-1] + ['1'])) for i in open(f'levels/level_{randint(1, 2)}.txt').readlines()]
+        return [list(map(int, ['1'] + list(i)[:-1] + ['1'])) for i in open(f'levels/level_{randint(1,5)}.txt').readlines()]
 
