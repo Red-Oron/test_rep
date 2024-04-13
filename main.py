@@ -16,6 +16,7 @@ def draw_background(screen, image):
 if __name__ == '__main__':
     menu = Menu()
     menu.display()
+    score = 0
     menu_mod = 1
     fin = False
     sett = False
@@ -25,9 +26,9 @@ if __name__ == '__main__':
     status_music = True
     board, player, settings, health, faq, bad, good = None, None, None, None, None, None, None
     screen = pygame.display.set_mode((1600, 900))
-    pygame.mixer.Sound('music/bg_music.mp3').play(-1).set_volume(0.2)
     while True:
         if menu_mod == 1:
+            score = 0
             draw_background(screen, 'backgrounds/menu.png')
             menu.update_display(screen)
             for event in pygame.event.get():
@@ -57,6 +58,7 @@ if __name__ == '__main__':
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if menu.Button1.pressed(pygame.mouse.get_pos()):
                         status_music = not status_music
+
                     if menu.Button2.pressed(pygame.mouse.get_pos()):
                         menu_mod = 3
                     if menu.Button3.pressed(pygame.mouse.get_pos()):
@@ -98,7 +100,7 @@ if __name__ == '__main__':
         elif menu_mod == 5:
             if not end_good:
                 end_good = True
-                good = Result_Good(player.score)
+                good = Result_Good(score)
             draw_background(screen, 'backgrounds/menu.png')
             good.update_display(screen)
             for event in pygame.event.get():
@@ -118,7 +120,7 @@ if __name__ == '__main__':
                 board = Board()
                 player = Player()
                 health = Health(player.health)
-                score = Score(player.score)
+                score_f = Score(score)
                 fin = True
             draw_background(screen, 'backgrounds/river.jpg')
             board.draw(screen)
@@ -130,11 +132,13 @@ if __name__ == '__main__':
                 health.change(player.health)
                 if player.cordX >= 13:
                     fin = False
+                    score += 1
                     menu_mod = 5
                 if player.death():
                     fin = False
+                    score = 0
                     menu_mod = 4
             player.draw(screen)
             health.draw(screen)
-            score.draw(screen)
+            score_f.draw(screen)
             pygame.display.flip()
