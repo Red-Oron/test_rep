@@ -34,6 +34,8 @@ class Player:
         self.player_rect = self.player_image.get_rect(center=(self.realcordX, self.realcordY))
 
         self.jump_sound1 = 'music/jamp.mp3'
+        self.water1 = 'music/water1.mp3'
+        self.bg_music = 'music/bgmusic.mp3'
 
     def death(self):
         if self.health == 0:
@@ -74,6 +76,8 @@ class Player:
 
         if 0 <= self.movingX < self.width and 0 <= self.movingY < self.hight:
             if mass[self.movingY][self.movingX] == 0:
+                pygame.mixer.music.load(self.water1)
+                pygame.mixer.music.play()
                 self.health -= 1
                 self.movingX = self.cordX
                 self.movingY = self.cordY
