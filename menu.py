@@ -55,3 +55,33 @@ class FAQ(Menu):
         screen.blit(text_surface3, (550, 500))
         pygame.display.flip()
 
+class Result_Bad(Menu):
+    def __init__(self):
+        super().__init__()
+
+    def update_display(self, screen):
+        self.Button1.create_button(screen, (107, 142, 35), 700, 453, 200, 70, 0, "Play again", (255, 255, 255))
+        self.Button2.create_button(screen, (107, 142, 35), 700, 600, 200, 70, 0, "Return to menu", (255, 255, 255))
+        font = pygame.font.Font(None, 120)
+        text_surface = font.render(f"Score: 0", False, (255, 255, 255))
+        screen.blit(text_surface, (700, 300))
+        font = pygame.font.Font(None, 120)
+        text_surface = font.render("Defeat", False, (255, 255, 255))
+        screen.blit(text_surface, (620, 120))
+        pygame.display.flip()
+
+class Result_Good(Menu):
+    def __init__(self, score):
+        super().__init__()
+        self.score = score
+
+    def update_display(self, screen):
+        self.Button1.create_button(screen, (107, 142, 35), 700, 453, 200, 70, 0, "Play again", (255, 255, 255))
+        self.Button2.create_button(screen, (107, 142, 35), 700, 600, 200, 70, 0, "Return to menu", (255, 255, 255))
+        font = pygame.font.Font(None, 120)
+        text_surface = font.render(f"Score: {self.score}", False, (255, 255, 255))
+        screen.blit(text_surface, (700, 300))
+        font = pygame.font.Font(None, 120)
+        text_surface = font.render("You win", False, (255, 255, 255))
+        screen.blit(text_surface, (620, 120))
+        pygame.display.flip()
