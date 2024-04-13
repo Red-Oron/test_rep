@@ -68,7 +68,8 @@ if __name__ == '__main__':
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if faq.Button1.pressed(pygame.mouse.get_pos()):
                         menu_mod = 2
-
+        elif menu_mod == 4:
+            pass
         else:
             if not fin:
                 board = Board()
@@ -76,11 +77,12 @@ if __name__ == '__main__':
                 fin = True
             draw_background(screen, 'backgrounds/river.jpg')
             board.draw(screen)
-
+            player.draw(screen)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                 player.move(event, board.board)
-                player.death()
-            player.draw(screen)
+                if player.death():
+                    fin = False
+                    menu_mod = 4
             pygame.display.flip()
