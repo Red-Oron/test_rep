@@ -68,7 +68,8 @@ if __name__ == '__main__':
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if faq.Button1.pressed(pygame.mouse.get_pos()):
                         menu_mod = 2
-
+        elif menu_mod == 4:
+            pass
         else:
             if not fin:
                 board = Board()
@@ -81,5 +82,7 @@ if __name__ == '__main__':
                 if event.type == pygame.QUIT:
                     pygame.quit()
                 player.move(event, board.board)
-                player.death()
+                if player.death():
+                    fin = False
+                    menu_mod = 4
             pygame.display.flip()
