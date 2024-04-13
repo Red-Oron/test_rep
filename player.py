@@ -38,11 +38,11 @@ class Player:
         self.bg_music = 'music/bgmusic.mp3'
         self.ground = 'music/ground.mp3'
         self.win_sound = 'music/win_sound.mp3'
-        self.HitlerA = 'music/HitlerA.mp3'
+        self.die = 'music/die.mp3'
 
     def death(self):
         if self.health == 0:
-            pygame.mixer.music.load(self.HitlerA)
+            pygame.mixer.music.load(self.die)
             pygame.mixer.music.play()
             return True
         else:
@@ -50,6 +50,7 @@ class Player:
 
     def move(self, event, mass):
         if event.type == pygame.KEYDOWN:
+            pygame.mixer.music.load(self.water1)
             if event.key == pygame.K_d:
                 self.movingX += 1
                 self.location(mass)
