@@ -76,10 +76,11 @@ if __name__ == '__main__':
                 fin = True
             draw_background(screen, 'backgrounds/river.jpg')
             board.draw(screen)
-            player.draw(screen)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                 player.move(event, board.board)
                 player.death()
+            player.draw(screen)
             pygame.display.flip()
