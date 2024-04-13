@@ -32,6 +32,8 @@ class Player:
         self.player_image = pygame.transform.scale(pygame.image.load('player_image/playe2r.png'), (100, 135))
         self.player_rect = self.player_image.get_rect(center=(self.realcordX, self.realcordY))
 
+        self.jump_sound1 = 'music/jamp.mp3'
+
     def death(self):
         if self.health == 0:
             return True
@@ -75,6 +77,8 @@ class Player:
                 self.movingX = self.cordX
                 self.movingY = self.cordY
             else:
+                pygame.mixer.music.load(self.jump_sound1)
+                pygame.mixer.music.play()
                 self.cordX = self.movingX
                 self.cordY = self.movingY
                 if mass[self.cordY][self.cordX] == 2: self.Finish = True
