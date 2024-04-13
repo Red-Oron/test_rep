@@ -36,9 +36,14 @@ class Player:
         self.jump_sound1 = 'music/jamp.mp3'
         self.water1 = 'music/water1.mp3'
         self.bg_music = 'music/bgmusic.mp3'
+        self.ground = 'music/ground.mp3'
+        self.win_sound = 'music/win_sound.mp3'
+        self.HitlerA = 'music/HitlerA.mp3'
 
     def death(self):
         if self.health == 0:
+            pygame.mixer.music.load(self.HitlerA)
+            pygame.mixer.music.play()
             return True
         else:
             return False
@@ -82,11 +87,18 @@ class Player:
                 self.movingX = self.cordX
                 self.movingY = self.cordY
             else:
-                pygame.mixer.music.load(self.jump_sound1)
-                pygame.mixer.music.play()
+                if mass[self.movingY][self.movingX] == 1:
+                    pygame.mixer.music.load(self.jump_sound1)
+                    pygame.mixer.music.play()
+                else:
+                    pygame.mixer.music.load(self.ground)
+                    pygame.mixer.music.play()
                 self.cordX = self.movingX
                 self.cordY = self.movingY
-                if mass[self.cordY][self.cordX] == 2: self.Finish = True
+                if mass[self.cordY][self.cordX] == 2:
+                    pygame.mixer.music.load(self.win_sound)
+                    pygame.mixer.music.play()
+                    self.Finish = True
         else:
             self.movingX = self.cordX
             self.movingY = self.cordY
