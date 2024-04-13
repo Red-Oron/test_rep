@@ -18,5 +18,5 @@ class Board:
                     screen.blit(self.lily,(self.size*j, self.size*i))
 
     def generate(self):
-        return [list(map(int, ['2', '2', '2'] + list(i)[:-1] + ['2', '2', '2'])) for i in open(f'levels/level_{randint(1, 7)}.txt').readlines()]
+        return [list(map(int, ['3', '3', '3'] + list(i)[:-1] + ['3', '3', '3'])) for i in open(f'levels/level_{randint(1, 7)}.txt').readlines()]
 

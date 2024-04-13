@@ -52,12 +52,24 @@ class Player:
             elif event.key == pygame.K_s:
                 self.movingY += 1
                 self.location(mass)
+            elif event.key == pygame.K_RIGHT:
+                self.movingX += 1
+                self.location(mass)
+            elif event.key == pygame.K_LEFT:
+                self.movingX -= 1
+                self.location(mass)
+            elif event.key == pygame.K_UP:
+                self.movingY -= 1
+                self.location(mass)
+            elif event.key == pygame.K_DOWN:
+                self.movingY += 1
+                self.location(mass)
+
 
 
     def location(self, mass):
 
         if 0 <= self.movingX < self.width and 0 <= self.movingY < self.hight:
-            print(self.movingX, self.movingY)
             if mass[self.movingY][self.movingX] == 0:
                 self.health -= 1
                 self.movingX = self.cordX
@@ -66,7 +78,9 @@ class Player:
                 self.cordX = self.movingX
                 self.cordY = self.movingY
                 if mass[self.cordY][self.cordX] == 2: self.Finish = True
-
+        else:
+            self.movingX = self.cordX
+            self.movingY = self.cordY
     def draw(self, screen):
         self.realcordX = 100 * self.cordX + 50
         self.realcordY = 100 * self.cordY + 25
