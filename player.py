@@ -2,16 +2,14 @@ import sys
 import pygame
 
 
-class player:
-
-    def __init__(self, helth, cordX, cordY):
-
-        self.helth = 6
+class Player:
+    def __init__(self):
+        self.health = 6
         self.cordX = 0
         self.cordY = 2
 
     def death(self):
-        if self.helth == 0:
+        if self.health == 0:
             return True
         else:
             return False
@@ -29,5 +27,5 @@ class player:
 
     def location(self, mass):
         if mass[self.cordX, self.cordY] == 0:
-            self.helth -= 1
+            self.health -= 1
         elif mass[self.cordX, self.cordY] == 2: True

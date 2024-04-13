@@ -1,16 +1,41 @@
 import pygame
-from random import randint
+from menu import Menu
+from player import Player
+from board import Board
 
 
-class Board:
-    def __init__(self):
-        self.width = 8
-        self.height = 5
-        self.board = self.generate()
-        for i in self.board:
-            print(*i)
+if __name__ == '__main__':
+    menu = Menu()
+    menu.display()
+    menu_mod = True
+    fin = False
+    board, player = None, None
+    screen = pygame.display.set_mode((1600, 900))
+    while True:
+        if menu_mod:
+            menu.update_display(screen)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if menu.Button1.pressed(pygame.mouse.get_pos()):
+                        menu_mod = False
+                    if menu.Button2.pressed(pygame.mouse.get_pos()):
+                        pass
+                    if menu.Button3.pressed(pygame.mouse.get_pos()):
+                        pass
+        else:
+            if not fin:
+                board = Board()
+                player = Player()
+                fin = True
+            board.draw(screen)
+            #player.draw()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                player.move(event)
+                player.death()
+            pygame.display.flip()
 
-    def generate(self):
-        return [list(map(int, ['1'] + list(i)[:-1] + ['1'])) for i in open(f'levels/level_{randint(1, 2)}.txt').readlines()]
 
-board = Board()
