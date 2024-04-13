@@ -5,6 +5,7 @@ from menu import Menu, Settings, FAQ, Result_Bad, Result_Good
 from player import Player
 from board import Board
 from health import Health
+from score import Score
 
 
 def draw_background(screen, image):
@@ -115,6 +116,7 @@ if __name__ == '__main__':
                 board = Board()
                 player = Player()
                 health = Health(player.health)
+                score = Score(player.score)
                 fin = True
             draw_background(screen, 'backgrounds/river.jpg')
             board.draw(screen)
@@ -132,4 +134,5 @@ if __name__ == '__main__':
                     menu_mod = 4
             player.draw(screen)
             health.draw(screen)
+            score.draw(screen)
             pygame.display.flip()
