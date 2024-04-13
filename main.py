@@ -2,10 +2,12 @@ import sys
 
 import pygame
 from menu import Menu, Settings, FAQ, Result_Bad, Result_Good
+from random import randint
 from player import Player
 from board import Board
 from health import Health
 from score import Score
+from enemy import Enemy
 
 
 def draw_background(screen, image):
@@ -17,13 +19,12 @@ if __name__ == '__main__':
     menu = Menu()
     menu.display()
     menu_mod = 1
-    fin = False
-    sett = False
-    fa = False
-    end_bad = False
-    end_good = False
-    board, player, settings, health, faq, bad, good = None, None, None, None, None, None, None
+    fin, sett, fa, end_bad, end_good = False, False, False, False, False
+    all_objects, score = None, None
+    board, player, settings, health, faq, bad, good, clock,  = None, None, None, None, None, None, None, None
     screen = pygame.display.set_mode((1600, 900))
+    #pygame.mixer.music.load('')
+    #pygame.mixer.Channel(0).play(pygame.mixer.Sound('music/bg_music.mp3', loop=-1))
     while True:
         if menu_mod == 1:
             draw_background(screen, 'backgrounds/menu.png')
@@ -113,11 +114,14 @@ if __name__ == '__main__':
 
         else:
             if not fin:
+                all_objects = pygame.sprite.Group()
+                clock = pygame.time.Clock()
                 board = Board()
                 player = Player()
                 health = Health(player.health)
                 score = Score(player.score)
                 fin = True
+            clock.tick(120)
             draw_background(screen, 'backgrounds/river.jpg')
             board.draw(screen)
             for event in pygame.event.get():
@@ -132,7 +136,12 @@ if __name__ == '__main__':
                 if player.death():
                     fin = False
                     menu_mod = 4
+            if randint(1, 100) == 1:
+                new_object = Enemy()
+                all_objects.add(new_object)
+            all_objects.update()
             player.draw(screen)
             health.draw(screen)
             score.draw(screen)
+            all_objects.draw(screen)
             pygame.display.flip()

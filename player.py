@@ -27,7 +27,7 @@ class Player:
 
         self.cell_size = self.screen_width / self.width
         self.realcordX = 100 * self.cordX + 50
-        self.realcordY = 100 * self.cordY + 25
+        self.realcordY = 100 * self.cordY
 
         # self.player_image = pygame.image.load('player_image/playe2r.png')
         self.player_image = pygame.transform.scale(pygame.image.load('player_image/playe2r.png'), (100, 135))
@@ -105,7 +105,7 @@ class Player:
             self.movingY = self.cordY
     def draw(self, screen):
         self.realcordX = 100 * self.cordX + 50
-        self.realcordY = 100 * self.cordY + 25
+        self.realcordY = 100 * self.cordY
         self.player_rect = self.player_image.get_rect(center=(self.realcordX, self.realcordY))
         screen.blit(self.player_image, self.player_rect)
 
