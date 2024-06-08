@@ -1,42 +1,31 @@
 import pygame
-pygame.init()
 
 
 class Button:
-    def create_button(self, surface, color, x, y, length, height, width, text, text_color):
-        surface = self.draw_button(surface, color, length, height, x, y, width)
-        surface = self.write_text(surface, text, text_color, length, height, x, y)
-        self.rect = pygame.Rect(x,y, length, height)
-        return surface
+    def __init__(self, x, y, wight, height, text, image=None, hover_image=None, sound=None):
+        self.colors = {'WHITE': (255, 255, 255)}
+        self.x, self.y, self.wight, self.height, self.text = x, y, wight, height, text
+        self.image = pygame.image.load(image) if image is not None else None
+        if self.image is not None:
+            self.image = pygame.transform.scale(self.image, (wight, height))
+            self.rect = self.image.get_rect(topleft=(x, y))
+        font = pygame.font.Font(None, 36)
+        self.text_surface = font.render(self.text, True, self.colors['WHITE'])
+        self.text_rect = self.text_surface.get_rect(center=(self.wight // 2 + self.x, self.height // 2 + self.y))
+        self.hover_image = pygame.image.load(hover_image) if hover_image is not None else None
+        if self.image is not None:
+            self.hover_image = pygame.transform.scale(self.hover_image, (wight, height))
+        self.sound = sound if sound is not None else None
+        self.is_hovered = False
 
-    def write_text(self, surface, text, text_color, length, height, x, y):
-        font_size = int(length//len(text))
-        myFont = pygame.font.Font(None, font_size)
-        myText = myFont.render(text, 1, text_color)
-        surface.blit(myText, ((x+length/2) - myText.get_width()/2, (y+height/2) - myText.get_height()/2))
-        return surface
+    def draw(self, surface):
+        current_image = self.hover_image if self.is_hovered and self.hover_image is not None else self.image
+        if current_image is not None:
+            surface.blit(current_image, self.rect)
+            font = pygame.font.Font(None, 36)
+            self.text_surface = font.render(self.text, True, self.colors['WHITE'])
+            self.text_rect = self.text_surface.get_rect(center=self.rect.center)
+        surface.blit(self.text_surface, self.text_rect)
 
-    def draw_button(self, surface, color, length, height, x, y, width):
-        for i in range(1,10):
-            s = pygame.Surface((length+(i*2),height+(i*2)))
-            s.fill(color)
-            alpha = (255/(i+2))
-            if alpha <= 0:
-                alpha = 1
-            s.set_alpha(alpha)
-            pygame.draw.rect(s, color, (x-i,y-i,length+i,height+i), width)
-            surface.blit(s, (x-i,y-i))
-        pygame.draw.rect(surface, color, (x,y,length,height), 0)
-        pygame.draw.rect(surface, (190,190,190), (x,y,length,height), 1)
-        return surface
-
-    def pressed(self, mouse):
-        if mouse[0] > self.rect.topleft[0]:
-            if mouse[1] > self.rect.topleft[1]:
-                if mouse[0] < self.rect.bottomright[0]:
-                    if mouse[1] < self.rect.bottomright[1]:
-                        return True
-                    else: return False
-                else: return False
-            else: return False
-        else: return False
+    def check_hover(self, cursor_position):
+        self.is_hovered = self.text_rect.collidepoint(cursor_position) if self.image is None else self.rect.collidepoint(cursor_position)
