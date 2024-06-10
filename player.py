@@ -37,17 +37,24 @@ class Player(pygame.sprite.Sprite):
 
 
 def game(screen, clock):
-    from functions import Board, draw_health, quit_any, draw_background, FPS, get_json, update_json, draw_score
+    from functions import Board, draw_health, quit_any, draw_background, FPS, get_json, update_json, draw_score, mosquitoes_music
     from menu import win_menu, defeat_menu
     from enemy import Enemy
     pygame.time.set_timer(pygame.USEREVENT, 1000)
-    score, current_size = get_json(['score', 'size'])
-    move = True
+    score, current_size, sound = get_json(['score', 'size', 'sound'])
+    move, sound_mosquitoes = True, True
     surface = pygame.Surface(current_size)
     board = Board()
     player = Player()
     mosquitoes = pygame.sprite.Group()
     while True:
+        if sound:
+            if sound_mosquitoes and len(mosquitoes) > 0:
+                mosquitoes_music(True)
+                sound_mosquitoes = False
+            elif not sound_mosquitoes and len(mosquitoes) == 0:
+                mosquitoes_music(False)
+                sound_mosquitoes = True
         # cursor_position = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -77,12 +84,13 @@ def game(screen, clock):
             player.X, player.Y = 0, 4
             player.movingX, player.movingY = 0, 4
         if player.health == 0:
-            sound = get_json(['sound'])
+            mosquitoes_music(False)
             if sound:
                 pygame.mixer.music.load('data\\music\\die.mp3')
                 pygame.mixer.music.play()
             return defeat_menu
         if board.board[player.Y][player.X] == 2:
+            mosquitoes_music(False)
             update_json({'score': get_json(['score']) + 1})
             sound = get_json(['sound'])
             if sound:

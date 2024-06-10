@@ -100,6 +100,11 @@ def change_music(f):
     background_sound.play(-1).set_volume(0.2) if f else background_sound.stop()
 
 
+def mosquitoes_music(f):
+    mosquitoes_sound.play(-1).set_volume(0.5) if f else mosquitoes_sound.stop()
+
+
 pygame.init()
 FPS = 100
 background_sound = pygame.mixer.Sound('data\\music\\bg_music.mp3')
+mosquitoes_sound = pygame.mixer.Sound('data\\music\\mosquitoes.mp3')
