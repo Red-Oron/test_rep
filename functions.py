@@ -50,32 +50,20 @@ class Board:
                     surface.blit(self.lily, (self.size * j, self.size * i))
 
 
-class Health:
-    def __init__(self, health):
-        self.hp_sprite = pygame.image.load('data\\Image\\objects\\heart.png')
-        self.hp_sprite = pygame.transform.scale(self.hp_sprite, (100, 100))
-        self.health = health
-
-    def change(self, health):
-        self.health = health
-
-    def draw(self, surface):
-        surface.blit(self.hp_sprite, (10, 10))
-        font = pygame.font.Font(None, 75)
-        text_surface = font.render(str(self.health), False, (255, 255, 255))
-        surface.blit(text_surface, (46, 42))
+def draw_health(surface, health):
+    hp_sprite = pygame.transform.scale(pygame.image.load('data\\Image\\objects\\heart.png'), (100, 100))
+    surface.blit(hp_sprite, (10, 10))
+    font = pygame.font.Font(None, 75)
+    text_surface = font.render(str(health), False, (255, 255, 255))
+    surface.blit(text_surface, (46, 42))
 
 
-class Score:
-    def __init__(self, score):
-        self.score = score
-        self.star = pygame.transform.scale(pygame.image.load('data\\Image\\objects\\star.png'), (100, 100))
-
-    def draw(self, surface):
-        surface.blit(self.star, (110 + 10, 12))
-        font = pygame.font.Font(None, 65)
-        text_surface = font.render(str(self.score), False, (0, 0, 0))
-        surface.blit(text_surface, (110 + 49, 41))
+def draw_score(surface, score):
+    star = pygame.transform.scale(pygame.image.load('data\\Image\\objects\\star.png'), (100, 100))
+    surface.blit(star, (110 + 10, 12))
+    font = pygame.font.Font(None, 65)
+    text_surface = font.render(str(score), False, (0, 0, 0))
+    surface.blit(text_surface, (110 + 49, 41))
 
 
 def draw_background(surface, image):
@@ -88,15 +76,10 @@ def quit_any():
     sys.exit()
 
 
-def update_json(size=None, score=None, sound=None):
+def update_json(sl):
     with open("data\\data.json", "r+") as jsonFile:
         data = json.load(jsonFile)
-        if size is not None:
-            data['size'] = size
-        if score is not None:
-            data['score'] = score
-        if sound is not None:
-            data['sound'] = sound
+        data.update(sl)
         jsonFile.seek(0)
         json.dump(data, jsonFile)
         jsonFile.truncate()
@@ -114,10 +97,7 @@ def get_json(arr):
 
 
 def change_music(f):
-    if f:
-        background_sound.play(-1).set_volume(0.2)
-    else:
-        background_sound.stop()
+    background_sound.play(-1).set_volume(0.2) if f else background_sound.stop()
 
 
 pygame.init()

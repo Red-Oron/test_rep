@@ -48,10 +48,10 @@ def main_menu(screen, clock):
                 if button_quit.is_hovered:
                     quit_any()
                 elif button_game.is_hovered:
-                    update_json(size=current_size)
+                    update_json({'size': current_size})
                     return game
                 elif button_settings.is_hovered:
-                    update_json(size=current_size)
+                    update_json({'size': current_size})
                     return settings
         main.draw(surface, screen, current_size)
         clock.tick(FPS)
@@ -79,14 +79,14 @@ def settings(screen, clock):
                 current_size = event.size
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if button_back.is_hovered:
-                    update_json(size=current_size)
+                    update_json({'size': current_size})
                     return main_menu
                 elif button_faq.is_hovered:
-                    update_json(size=current_size)
+                    update_json({'size': current_size})
                     return faq
                 elif button_sound.is_hovered:
                     button_sound.text = button_sound.text[:6] + {'on': 'off', 'off': 'on'}[button_sound.text[6:]]
-                    update_json(sound=not get_json(['sound']))
+                    update_json({'sound': not get_json(['sound'])})
                     change_music(get_json(['sound']))
         sett.draw(surface, screen, current_size)
         clock.tick(FPS)
@@ -115,7 +115,7 @@ def faq(screen, clock):
                 current_size = event.size
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if button_back.is_hovered:
-                    update_json(size=current_size)
+                    update_json({'size': current_size})
                     return settings
         FAQ.draw(surface, screen, current_size)
         clock.tick(FPS)
@@ -143,10 +143,10 @@ def win_menu(screen, clock):
                 current_size = event.size
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if button_menu.is_hovered:
-                    update_json(size=current_size, score=0)
+                    update_json({'size': current_size, 'score': 0})
                     return main_menu
                 elif button_game.is_hovered:
-                    update_json(size=current_size)
+                    update_json({'size': current_size})
                     return game
         win.draw(surface, screen, current_size)
         clock.tick(FPS)
@@ -158,7 +158,7 @@ def defeat_menu(screen, clock):
     font = pygame.font.Font(None, 120)
     text_surface = font.render('You lose', False, (255, 255, 255))
     score, current_size = get_json(['score', 'size'])
-    update_json(score=0)
+    update_json({'score': 0})
     text_surface1 = font.render(f'Score: {score}', False, (255, 255, 255))
     button_game = Button(527, 439, 522, 93, 'Play Again', 'data\\Image\\backgrounds\\button.png')
     button_menu = Button(527, 587, 522, 93, 'Return to main menu', 'data\\Image\\backgrounds\\button.png')
@@ -175,10 +175,10 @@ def defeat_menu(screen, clock):
                 current_size = event.size
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if button_menu.is_hovered:
-                    update_json(size=current_size)
+                    update_json({'size': current_size})
                     return main_menu
                 elif button_game.is_hovered:
-                    update_json(size=current_size)
+                    update_json({'size': current_size})
                     return game
         defeat.draw(surface, screen, current_size)
         clock.tick(FPS)
