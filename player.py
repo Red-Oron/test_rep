@@ -67,9 +67,9 @@ def game(screen, clock):
                 if event.key in [pygame.K_w, pygame.K_DOWN, pygame.K_s, pygame.K_UP, pygame.K_d, pygame.K_RIGHT,
                                  pygame.K_a, pygame.K_LEFT] and move:
                     move = False
-                    if event.key in [pygame.K_w, pygame.K_DOWN]:
+                    if event.key in [pygame.K_s, pygame.K_DOWN]:
                         player.movingY = player.Y + 1
-                    elif event.key in [pygame.K_s, pygame.K_UP]:
+                    elif event.key in [pygame.K_w, pygame.K_UP]:
                         player.movingY = player.Y - 1
                     elif event.key in [pygame.K_d, pygame.K_RIGHT]:
                         player.movingX = player.X + 1
